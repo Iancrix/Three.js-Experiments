@@ -1,25 +1,44 @@
-import logo from './logo.svg';
+
+import React, { Component } from 'react'
 import './App.css';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+import { World } from './World/World.js';
+
+class App extends Component {
+
+  main = async () => {
+    // Get a reference to the container element
+    const container = document.querySelector('#scene-container');
+
+    // 1. Create an instance of the World app
+    const world = new World(container);
+
+    // complete async tasks
+    await world.init();
+
+    // start the animation loop
+    world.start();
+  }
+
+  componentDidMount() {
+    this.main().catch((err) => {
+      console.error(err);
+    });
+  }
+
+  render() {
+    return (
+      <React.Fragment>
+        <div className="view">
+          <div id="scene-container"></div>
+        </div>
+        <div className="view">
+          <div id="fill-container"></div>
+        </div>
+      </React.Fragment>
+    )
+  }
 }
+
 
 export default App;
